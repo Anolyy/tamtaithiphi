@@ -3,55 +3,256 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lá Số Tử Vi - Tam Tai Blockchain 2025</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>Lá Số Tử Vi 2025 - Tải PDF Miễn Phí</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@400;700&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #e0e0ff;
+            font-family: 'Roboto', sans-serif;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        #particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        .particle {
+            position: absolute;
+            background: rgba(0, 255, 255, 0.6);
+            border-radius: 50%;
+            box-shadow: 0 0 15px cyan;
+            animation: float 12s infinite linear;
+        }
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+        header {
+            text-align: center;
+            padding: 50px 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-bottom: 3px solid cyan;
+        }
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.8em;
+            text-shadow: 0 0 20px cyan, 0 0 40px magenta;
+            animation: neon 2s infinite alternate;
+        }
+        @keyframes neon { from { text-shadow: 0 0 10px cyan; } to { text-shadow: 0 0 30px cyan, 0 0 50px magenta; } }
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+        }
+        section { margin-bottom: 40px; padding: 20px; border: 1px solid rgba(0, 255, 255, 0.5); border-radius: 10px; background: rgba(0, 0, 0, 0.3); }
+        h2 { color: cyan; text-shadow: 0 0 10px cyan; margin-bottom: 15px; }
+        .lookup-form {
+            text-align: center;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+        }
+        input, select {
+            padding: 12px;
+            margin: 8px;
+            width: 120px;
+            border: 2px solid cyan;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+        button {
+            margin: 20px 10px;
+            padding: 12px 30px;
+            background: linear-gradient(45deg, cyan, magenta);
+            border: none;
+            color: black;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+            transition: 0.3s;
+        }
+        button:hover { transform: scale(1.1); box-shadow: 0 0 30px magenta; }
+        #result { margin-top: 20px; padding: 20px; border-radius: 10px; background: rgba(0, 0, 0, 0.5); min-height: 80px; display: none; animation: glow 1.5s infinite alternate; }
+        @keyframes glow { from { box-shadow: 0 0 10px cyan; } to { box-shadow: 0 0 30px magenta; } }
+        #tuvi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 12px;
+            max-width: 900px;
+            margin: 30px auto;
+        }
+        .cung {
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid cyan;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            transition: 0.3s;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+        }
+        .cung:hover { transform: scale(1.05); box-shadow: 0 0 30px magenta; }
+        .cung h3 { color: gold; margin: 0; font-size: 1.2em; }
+        .cung .tinh { color: #ff6b6b; font-weight: bold; font-size: 0.9em; }
+        .cung.menh { border-color: gold; box-shadow: 0 0 25px gold; }
+        #pdf-content { background: white; color: black; padding: 40px; border-radius: 15px; max-width: 800px; margin: 20px auto; }
+        #pdf-content h1 { color: #302b63; text-align: center; }
+        #pdf-content .cung { background: #f0f0ff; border: 2px solid #302b63; color: #302b63; }
+        footer { text-align: center; padding: 20px; color: #aaa; font-size: 0.9em; }
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5em; }
+            #tuvi-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(6, 1fr); }
+            input, select { width: 100px; }
+        }
+    </style>
+    <!-- Thư viện xuất PDF -->
+    <script src="https://html2pdf.js.org/html2pdf.bundle.min.js"></script>
 </head>
 <body>
     <div id="particles"></div>
 
     <header>
         <h1>LÁ SỐ TỬ VI</h1>
-        <p>Blockchain Phong Thủy - Tử Vi + Tam Tai 2025</p>
+        <p>Blockchain Phong Thủy 2025 - Tải PDF Miễn Phí</p>
     </header>
 
     <div class="container">
-        <!-- Form Tra Cứu -->
         <section>
-            <h2>🔮 Tra Cứu Lá SỐ TỬ VI + Tam Tai</h2>
+            <h2>🔮 Nhập Thông Tin Xem Lá Số</h2>
             <div class="lookup-form">
-                <input type="number" id="day" placeholder="Ngày (1-31)" min="1" max="31">
-                <input type="number" id="month" placeholder="Tháng (1-12)" min="1" max="12">
-                <input type="number" id="year" placeholder="Năm sinh" min="1900" max="2025">
+                <input type="number" id="day" placeholder="Ngày" min="1" max="31">
+                <input type="number" id="month" placeholder="Tháng" min="1" max="12">
+                <input type="number" id="year" placeholder="Năm" min="1900" max="2025">
                 <select id="gender">
                     <option value="nam">Nam</option>
                     <option value="nu">Nữ</option>
                 </select>
                 <select id="hour">
                     <option value="0">Tý (23h-1h)</option>
-                    <option value="1">Sửu (1h-3h)</option>
-                    <!-- ... thêm 10 giờ nữa nếu cần -->
-                    <option value="11">Hợi (21h-23h)</option>
+                    <option value="1">Sửu</option>
+                    <option value="2">Dần</option>
+                    <option value="3">Mão</option>
+                    <option value="4">Thìn</option>
+                    <option value="5">Tỵ</option>
+                    <option value="6">Ngọ</option>
+                    <option value="7">Mùi</option>
+                    <option value="8">Thân</option>
+                    <option value="9">Dậu</option>
+                    <option value="10">Tuất</option>
+                    <option value="11">Hợi</option>
                 </select>
                 <br>
                 <button onclick="generateTuVi()">XEM LÁ SỐ</button>
+                <button onclick="downloadPDF()" style="background: linear-gradient(45deg, gold, orange);">TẢI PDF</button>
                 <div id="result"></div>
             </div>
         </section>
 
-        <!-- Lá số Tử Vi -->
         <section id="laso" style="display:none;">
             <h2>Lá Số Tử Vi Của Bạn</h2>
             <div id="tuvi-grid"></div>
-            <div id="tuviketqua"></div>
+            <div id="tuviketqua" style="text-align:center; margin-top:20px;"></div>
         </section>
     </div>
 
-    <footer>
-        © 2025 Tử Vi Blockchain - Dữ liệu mã hóa bất biến.
-    </footer>
+    <!-- Nội dung ẩn để xuất PDF -->
+    <div id="pdf-content" style="display:none;">
+        <h1>LÁ SỐ TỬ VI</h1>
+        <p id="pdf-info" style="text-align:center; font-size:1.1em;"></p>
+        <div id="pdf-grid" style="display:grid; grid-template-columns:repeat(4,1fr); gap:15px; margin:30px 0;"></div>
+        <p id="pdf-ketqua" style="text-align:center; font-style:italic; margin-top:20px;"></p>
+        <p style="text-align:center; color:#888; margin-top:30px;">© 2025 Tử Vi Blockchain - Dữ liệu mã hóa bất biến</p>
+    </div>
 
-    <script src="particles.js"></script>
-    <script src="script.js"></script>
+    <footer>© 2025 Tử Vi Blockchain - Dữ liệu được mã hóa trên chuỗi khối.</footer>
+
+    <script>
+        // === PARTICLES ===
+        const pContainer = document.getElementById('particles');
+        for (let i = 0; i < 60; i++) {
+            const p = document.createElement('div');
+            p.classList.add('particle');
+            p.style.width = `${Math.random() * 15 + 5}px`;
+            p.style.height = p.style.width;
+            p.style.left = `${Math.random() * 100}vw`;
+            p.style.animationDelay = `${Math.random() * 10}s`;
+            pContainer.appendChild(p);
+        }
+
+        // === CAN CHI & TỬ VI ===
+        const can = ["Canh","Tân","Nhâm","Quý","Giáp","Ất","Bính","Đinh","Mậu","Kỷ"];
+        const chi = ["Thân","Dậu","Tuất","Hợi","Tý","Sửu","Dần","Mão","Thìn","Tỵ","Ngọ","Mùi"];
+        const gioChi = ["Tý","Sửu","Dần","Mão","Thìn","Tỵ","Ngọ","Mùi","Thân","Dậu","Tuất","Hợi"];
+        const cungArr = ["Mệnh","Phụ Mẫu","Phúc Đức","Điền Trạch","Quan Lộc","Nô Bộc","Thiên Di","Tật Ách","Tài Bạch","Tử Tức","Phu Thê","Huynh Đệ"];
+        const chinhTinh = ["Tử Vi","Thiên Phủ","Thái Dương","Vũ Khúc","Thiên Đồng","Liêm Trinh","Thiên Cơ","Thiên Lương","Cự Môn","Thất Sát","Phá Quân","Tham Lang"];
+
+        function getCanChi(y) { return `${can[y % 10]} ${chi[y % 12]}`; }
+
+        function generateTuVi() {
+            const d = parseInt(document.getElementById('day').value);
+            const m = parseInt(document.getElementById('month').value);
+            const y = parseInt(document.getElementById('year').value);
+            const g = document.getElementById('gender').value;
+            const h = parseInt(document.getElementById('hour').value);
+            if (!d || !m || !y) return alert("⚠️ Nhập đầy đủ ngày/tháng/năm!");
+
+            const canchi = getCanChi(y);
+            const isTamTai = ["Hợi","Mão","Mùi"].includes(chi[y % 12]);
+            const gio = gioChi[h];
+
+            document.getElementById('laso').style.display = "block";
+            const grid = document.getElementById('tuvi-grid');
+            grid.innerHTML = "";
+            const pdfGrid = document.getElementById('pdf-grid');
+            pdfGrid.innerHTML = "";
+
+            cungArr.forEach((cung, i) => {
+                const tinh = chinhTinh[i % chinhTinh.length];
+                const div = document.createElement('div');
+                div.className = `cung ${cung === "Mệnh" ? "menh" : ""}`;
+                div.innerHTML = `<h3>${cung}</h3><div class="tinh">${tinh}</div>`;
+                grid.appendChild(div);
+
+                const pdfDiv = div.cloneNode(true);
+                pdfGrid.appendChild(pdfDiv);
+            });
+
+            const info = `${d}/${m}/${y} - ${gio} giờ - ${g === "nam" ? "Dương Nam" : "Âm Nữ"}`;
+            document.getElementById('tuviketqua').innerHTML = `
+                <p><strong>Tuổi:</strong> ${canchi} | <strong>Giờ sinh:</strong> ${gio}</p>
+                <p><strong>Tam Tai 2025:</strong> ${isTamTai ? "🚨 PHẠM" : "✅ KHÔNG PHẠM"}</p>
+                <p>💫 <strong>Mệnh:</strong> Tử Vi tọa thủ - Quý nhân phù trợ, sự nghiệp thăng tiến!</p>
+            `;
+            document.getElementById('pdf-info').innerText = info;
+            document.getElementById('pdf-ketqua').innerHTML = document.getElementById('tuviketqua').innerHTML;
+            document.getElementById('result').style.display = "block";
+            document.getElementById('result').innerHTML = "✅ Lá số đã sẵn sàng! Nhấn TẢI PDF để lưu.";
+        }
+
+        // === TẢI PDF ===
+        function downloadPDF() {
+            if (!document.getElementById('pdf-info').innerText) {
+                alert("⚠️ Vui lòng XEM LÁ SỐ trước khi tải!");
+                return;
+            }
+            const element = document.getElementById('pdf-content');
+            const opt = {
+                margin: 0.5,
+                filename: `La_So_Tu_Vi_${new Date().getFullYear()}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+            };
+            html2pdf().set(opt).from(element).save();
+        }
+    </script>
 </body>
 </html>
