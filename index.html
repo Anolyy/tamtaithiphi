@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lá Số Tử Vi - Tam Tai Blockchain 2025</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="particles"></div>
+
+    <header>
+        <h1>LÁ SỐ TỬ VI</h1>
+        <p>Blockchain Phong Thủy - Tử Vi + Tam Tai 2025</p>
+    </header>
+
+    <div class="container">
+        <!-- Form Tra Cứu -->
+        <section>
+            <h2>🔮 Tra Cứu Lá SỐ TỬ VI + Tam Tai</h2>
+            <div class="lookup-form">
+                <input type="number" id="day" placeholder="Ngày (1-31)" min="1" max="31">
+                <input type="number" id="month" placeholder="Tháng (1-12)" min="1" max="12">
+                <input type="number" id="year" placeholder="Năm sinh" min="1900" max="2025">
+                <select id="gender">
+                    <option value="nam">Nam</option>
+                    <option value="nu">Nữ</option>
+                </select>
+                <select id="hour">
+                    <option value="0">Tý (23h-1h)</option>
+                    <option value="1">Sửu (1h-3h)</option>
+                    <!-- ... thêm 10 giờ nữa nếu cần -->
+                    <option value="11">Hợi (21h-23h)</option>
+                </select>
+                <br>
+                <button onclick="generateTuVi()">XEM LÁ SỐ</button>
+                <div id="result"></div>
+            </div>
+        </section>
+
+        <!-- Lá số Tử Vi -->
+        <section id="laso" style="display:none;">
+            <h2>Lá Số Tử Vi Của Bạn</h2>
+            <div id="tuvi-grid"></div>
+            <div id="tuviketqua"></div>
+        </section>
+    </div>
+
+    <footer>
+        © 2025 Tử Vi Blockchain - Dữ liệu mã hóa bất biến.
+    </footer>
+
+    <script src="particles.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
