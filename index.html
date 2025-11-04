@@ -51,6 +51,46 @@
         }
         section { margin-bottom: 40px; padding: 20px; border: 1px solid rgba(0, 255, 255, 0.5); border-radius: 10px; background: rgba(0, 0, 0, 0.3); }
         h2 { color: cyan; text-shadow: 0 0 10px cyan; margin-bottom: 15px; }
+
+        /* ==== TAB ==== */
+        .tab {
+            overflow: hidden;
+            border: 1px solid rgba(0,255,255,0.5);
+            border-radius: 10px 10px 0 0;
+            background: rgba(0,0,0,0.4);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .tab button {
+            background: transparent;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 20px;
+            transition: 0.3s;
+            font-size: 1.1em;
+            color: #ccc;
+            flex: 1;
+            min-width: 150px;
+        }
+        .tab button:hover { background: rgba(255,255,255,0.1); }
+        .tab button.active {
+            background: linear-gradient(45deg, cyan, magenta);
+            color: black;
+            font-weight: bold;
+        }
+        .tabcontent {
+            display: none;
+            padding: 20px;
+            border: 1px solid rgba(0,255,255,0.5);
+            border-top: none;
+            border-radius: 0 0 10px 10px;
+            animation: fade 0.5s;
+        }
+        @keyframes fade { from {opacity:0;} to {opacity:1;} }
+        .tabcontent.active { display: block; }
+
         .lookup-form {
             text-align: center;
             padding: 30px;
@@ -111,6 +151,7 @@
             h1 { font-size: 2.5em; }
             #tuvi-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(6, 1fr); }
             input, select { width: 100px; }
+            .tab button { min-width: auto; padding: 10px; font-size: 1em; }
         }
     </style>
     <!-- Thư viện xuất PDF -->
@@ -156,11 +197,24 @@
             </div>
         </section>
 
-        <section id="laso" style="display:none;">
+        <!-- ==== TAB ==== -->
+        <div class="tab">
+            <button class="tablinks active" onclick="openTab(event, 'LaSo')">Lá Số</button>
+            <button class="tablinks" onclick="openTab(event, 'LuanGiai')">Luận Giải Tam Tai & Thị Phi</button>
+        </div>
+
+        <!-- Lá Số -->
+        <div id="LaSo" class="tabcontent active">
             <h2>Lá Số Tử Vi Của Bạn</h2>
             <div id="tuvi-grid"></div>
             <div id="tuviketqua" style="text-align:center; margin-top:20px;"></div>
-        </section>
+        </div>
+
+        <!-- Luận Giải -->
+        <div id="LuanGiai" class="tabcontent">
+            <h2>🔥 Luận Giải Tam Tai & Thị Phi 2025</h2>
+            <div id="tamtai-content"></div>
+        </div>
     </div>
 
     <!-- Nội dung ẩn để xuất PDF -->
@@ -169,6 +223,10 @@
         <p id="pdf-info" style="text-align:center; font-size:1.1em;"></p>
         <div id="pdf-grid" style="display:grid; grid-template-columns:repeat(4,1fr); gap:15px; margin:30px 0;"></div>
         <p id="pdf-ketqua" style="text-align:center; font-style:italic; margin-top:20px;"></p>
+        <div id="pdf-tamtai" style="margin-top:40px; padding:20px; border-top:2px solid #302b63;">
+            <h2 style="color:#302b63;">Luận Giải Tam Tai & Thị Phi</h2>
+            <div id="pdf-tamtai-text"></div>
+        </div>
         <p style="text-align:center; color:#888; margin-top:30px;">© 2025 Tử Vi Blockchain - Dữ liệu mã hóa bất biến</p>
     </div>
 
@@ -194,6 +252,14 @@
         const cungArr = ["Mệnh","Phụ Mẫu","Phúc Đức","Điền Trạch","Quan Lộc","Nô Bộc","Thiên Di","Tật Ách","Tài Bạch","Tử Tức","Phu Thê","Huynh Đệ"];
         const chinhTinh = ["Tử Vi","Thiên Phủ","Thái Dương","Vũ Khúc","Thiên Đồng","Liêm Trinh","Thiên Cơ","Thiên Lương","Cự Môn","Thất Sát","Phá Quân","Tham Lang"];
 
+        // ==== DỮ LIỆU TAM TAI 2025 ====
+        const tamtai2025 = {
+            "Hợi": {group:"Hợi-Mão-Mùi", warn:"🚨 PHẠM TAM TAI", advice:"Năm 2025 là năm **Ất Tỵ** thuộc hành Hỏa, khắc Thủy của nhóm Hợi-Mão-Mùi. <br>⚠️ <strong>Thị Phi:</strong> Dễ bị tiểu nhân quấy phá, kiện tụng, lời ra tiếng vào. <br>💡 <strong>Khắc phục:</strong> Giữ miệng, tránh tranh cãi, làm việc thiện, đeo đá mắt hổ hoặc vòng trầm hương."},
+            "Mão": {group:"Hợi-Mão-Mùi", warn:"🚨 PHẠM TAM TAI", advice:"Năm 2025 là năm **Ất Tỵ** thuộc hành Hỏa, khắc Thủy của nhóm Hợi-Mão-Mùi. <br>⚠️ <strong>Thị Phi:</strong> Dễ bị tiểu nhân quấy phá, kiện tụng, lời ra tiếng vào. <br>💡 <strong>Khắc phục:</strong> Giữ miệng, tránh tranh cãi, làm việc thiện, đeo đá mắt hổ hoặc vòng trầm hương."},
+            "Mùi": {group:"Hợi-Mão-Mùi", warn:"🚨 PHẠM TAM TAI", advice:"Năm 2025 là năm **Ất Tỵ** thuộc hành Hỏa, khắc Thủy của nhóm Hợi-Mão-Mùi. <br>⚠️ <strong>Thị Phi:</strong> Dễ bị tiểu nhân quấy phá, kiện tụng, lời ra tiếng vào. <br>💡 <strong>Khắc phục:</strong> Giữ miệng, tránh tranh cãi, làm việc thiện, đeo đá mắt hổ hoặc vòng trầm hương."},
+            "default": {warn:"✅ KHÔNG PHẠM TAM TAI", advice:"Năm 2025 **Ất Tỵ** không xung khắc với tuổi của bạn. <br>🎉 <strong>Thị Phi:</strong> Ít rắc rối, dễ được quý nhân giúp đỡ. <br>💡 <strong>Khuyến khích:</strong> Mở rộng quan hệ, đầu tư, khởi nghiệp. Đeo ngọc bích hoặc thạch anh hồng để tăng vận may."}
+        };
+
         function getCanChi(y) { return `${can[y % 10]} ${chi[y % 12]}`; }
 
         function generateTuVi() {
@@ -205,10 +271,12 @@
             if (!d || !m || !y) return alert("⚠️ Nhập đầy đủ ngày/tháng/năm!");
 
             const canchi = getCanChi(y);
-            const isTamTai = ["Hợi","Mão","Mùi"].includes(chi[y % 12]);
+            const chiYear = chi[y % 12];
             const gio = gioChi[h];
+            const tamtai = tamtai2025[chiYear] || tamtai2025.default;
 
-            document.getElementById('laso').style.display = "block";
+            // --- Lá số ---
+            document.getElementById('LaSo').style.display = "block";
             const grid = document.getElementById('tuvi-grid');
             grid.innerHTML = "";
             const pdfGrid = document.getElementById('pdf-grid');
@@ -228,13 +296,39 @@
             const info = `${d}/${m}/${y} - ${gio} giờ - ${g === "nam" ? "Dương Nam" : "Âm Nữ"}`;
             document.getElementById('tuviketqua').innerHTML = `
                 <p><strong>Tuổi:</strong> ${canchi} | <strong>Giờ sinh:</strong> ${gio}</p>
-                <p><strong>Tam Tai 2025:</strong> ${isTamTai ? "🚨 PHẠM" : "✅ KHÔNG PHẠM"}</p>
+                <p><strong>Tam Tai 2025:</strong> ${tamtai.warn}</p>
                 <p>💫 <strong>Mệnh:</strong> Tử Vi tọa thủ - Quý nhân phù trợ, sự nghiệp thăng tiến!</p>
             `;
+
+            // --- Luận giải Tam Tai ---
+            document.getElementById('tamtai-content').innerHTML = `
+                <p><strong>Nhóm Tam Tai:</strong> ${tamtai.group || "Không thuộc nhóm Tam Tai 2025"}</p>
+                <p style="font-size:1.2em; margin:15px 0;">${tamtai.advice}</p>
+                <hr style="border:1px dashed cyan; margin:20px 0;">
+                <p><em>💡 <strong>Mẹo phong thủy:</strong> Cúng sao giải hạn vào mùng 8 âm lịch, đặt cây kim tiền ở hướng Đông Nam, đeo vòng tay phong thủy hợp mệnh.</em></p>
+            `;
+
+            // --- PDF ---
             document.getElementById('pdf-info').innerText = info;
             document.getElementById('pdf-ketqua').innerHTML = document.getElementById('tuviketqua').innerHTML;
+            document.getElementById('pdf-tamtai-text').innerHTML = document.getElementById('tamtai-content').innerHTML;
+
             document.getElementById('result').style.display = "block";
-            document.getElementById('result').innerHTML = "✅ Lá số đã sẵn sàng! Nhấn TẢI PDF để lưu.";
+            document.getElementById('result').innerHTML = "✅ Lá số & luận giải đã sẵn sàng! Nhấn TẢI PDF để lưu.";
+        }
+
+        // === TAB ===
+        function openTab(evt, tabName) {
+            const tabcontent = document.getElementsByClassName("tabcontent");
+            for (let i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            const tablinks = document.getElementsByClassName("tablinks");
+            for (let i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.className += " active";
         }
 
         // === TẢI PDF ===
@@ -246,7 +340,7 @@
             const element = document.getElementById('pdf-content');
             const opt = {
                 margin: 0.5,
-                filename: `La_So_Tu_Vi_${new Date().getFullYear()}.pdf`,
+                filename: `La_So_Tu_Vi_2025.pdf`,
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: { scale: 2 },
                 jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
